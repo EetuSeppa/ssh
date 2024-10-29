@@ -25,3 +25,21 @@ class TestSpreadSheet(TestCase):
         spreadsheet.set("A1", "'Apple")
         self.assertEqual("#Error", spreadsheet.evaluate("A1"))
 
+    def test_valid_formula(self):
+        spreadsheet = SpreadSheet()
+        spreadsheet.set("A1", "='Apple'")
+        self.assertEqual("Apple", spreadsheet.evaluate("A1"))
+
+    def test_valid_integer_formula(self):
+        spreadsheet = SpreadSheet()
+        spreadsheet.set("A1", "=1")
+        self.assertEqual(1, spreadsheet.evaluate("A1"))
+
+    def test_invalid_formula(self):
+        spreadsheet = SpreadSheet()
+        spreadsheet.set("A1", "='Apple")
+        self.assertEqual("#Error", spreadsheet.evaluate("A1"))
+
+
+
+
