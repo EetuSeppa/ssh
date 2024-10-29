@@ -1,3 +1,4 @@
+
 class SpreadSheet:
 
     def __init__(self):
@@ -12,6 +13,10 @@ class SpreadSheet:
 
     def evaluate(self, cell: str) -> int | str:
         value = self.get(cell)
-        if value.isdigit():
+        if value.startswith("'") and value.endswith("'"):
+            return value[1:-1]
+        try:
             return int(value)
-        return value
+        except ValueError:
+            return "#Error"
+
