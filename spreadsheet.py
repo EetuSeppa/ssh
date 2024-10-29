@@ -18,6 +18,14 @@ class SpreadSheet:
         if value.startswith("="):
             if value[1:].startswith("'") and value[-1] == "'":
                 result = value[2:-1]
+            elif '+' in value or '*' in value:
+                try:
+                    if any(ch in value for ch in '.'):
+                        result = "#Error"
+                    else:
+                        result = eval(value[1:])
+                except:
+                    result = "#Error"
             else:
                 ref = value[1:]
                 if ref.isnumeric():
@@ -37,13 +45,4 @@ class SpreadSheet:
                 result = "#Error"
         self._evaluating.remove(cell)
         return result
-
-
-if __name__ == "__main__":
-    spreadsheet = SpreadSheet()
-    spreadsheet.set("A1", "=B1")
-    spreadsheet.set("B1", "=A1")
-    value = spreadsheet.evaluate("A1")
-
-    print(value)
 
